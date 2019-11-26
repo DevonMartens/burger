@@ -1,7 +1,7 @@
 //dependency
 var orm = require("../config/orm.js");
 //burger variable and export it
-var burgers = {
+var burger = {
     //call back all or orms 
 	selectAll: function(cb){
 		orm.selectAll("burgers", function(res){
