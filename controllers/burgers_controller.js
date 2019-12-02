@@ -36,6 +36,7 @@ router.post("/burgers/create", function(req,res){
 });
 //put router after post
 router.put("/burgers/update/:id", function(req,res){
+	console.log("string")
 	var condition = "id = " + req.params.id;
 	console.log("condition", condition);
 
