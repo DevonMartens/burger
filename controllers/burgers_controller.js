@@ -39,15 +39,18 @@ router.put("/burgers/update/:id", function(req,res){
 	var condition = "id = " + req.params.id;
 	console.log("condition", condition);
 
-	burgers.updateOne({
-        "devoured": req.body.devoured
+	burgers.updateOne(condition, function(result){
+		console.log(result)
+		res.sendStatus(200)
+	})
+//        "devoured": req.body.devoured
 //if (result,changedRows === 0)
 //return result.status(404)
 //else { result.status(200).end(); }
-	}, condition, function(data){
-		res.redirect("/burgers")
+	//}, // condition, function(data){
+	//	res.redirect("/burgers")
 	});
-});
+
 //router.deleteOne(condition, function(req, res))
 //var condition = "id" + req.params.id;
 //console.log("condition", condition):

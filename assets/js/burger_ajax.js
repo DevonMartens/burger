@@ -1,10 +1,7 @@
-///$function () {
-//$(".create-form").on("submit", function(event){
-  ///      event.preventDefault();
-     ///   var newBurger = {
-        ///    burger_name: $("#newBurger").val().trim(),
-           /// devoured: 0 
-     ///   }
- //   });
-
-//}); 
+$(document).ready(function(){
+   $(".devour-form").on("submit", function(event){
+      event.preventDefault()
+    var burger_id =  $(this).children(".burger-id").val();
+    console.log(burger_id)
+   })
+})

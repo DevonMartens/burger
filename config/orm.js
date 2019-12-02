@@ -61,7 +61,7 @@ insertOne: function(table,cols,vals,cb){
 //create update one
 updateOne: function(table, objColVals, condition, cb){
 	var dbQuery = "UPDATE " + table;
-	dbQuery += "SET";
+	dbQuery += " SET ";
 	dbQuery += objToSql(objColVals);
 	dbQuery += " WHERE ";
 	dbQuery += condition;
