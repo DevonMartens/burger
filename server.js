@@ -1,31 +1,27 @@
-//dependencies 
 var express = require("express");
-var methodOverride = require("method-override");
-var app = express();
-var bodyParser = require("body-parser");
-var mysql = require('mysql');
+
 var PORT = process.env.PORT || 3000;
 
-app.listen(PORT, function() {
-    console.log("server listening on:http://localhost:" + PORT);
-});
-//static files
+var app = express();
+
+// Serve static content for the app from the "public" directory in the application directory.
 app.use(express.static("public"));
-//connect body parser element
-//url encoded parse and json
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json());
-app.use(methodOverride('_method'));
 
-var exphbs = require("express-handlebars"); 
-//template (spelling?) engine w/ default layout of main
-app.engine("handlebars", exphbs({defaultLayout: "main"}));
+// Parse request body as JSON
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+// Set Handlebars.
+var exphbs = require("express-handlebars");
+
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
-//route used
-var routes = require("./controllers/burgers_controller.js");
 
+// Import routes and give the server access to them.
+var routes = require("./controllers/burgerController.js");
 
+app.use(routes);
 
-app.use("/", routes);
-//maybe needed
-//app.listen(port);	 
+app.listen(PORT, function() {
+  console.log("App now listening at localhost:" + PORT);
+})
