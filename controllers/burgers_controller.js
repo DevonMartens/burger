@@ -1,64 +1,46 @@
-//manage db array and identify endpoints
-
-//file dependencies req connections to express
 var express = require("express");
-
 var router = express.Router();
 
-var burgers = require("../models/burger.js");
+// Import the model (burger.js) to use its database functions.
+var burger = require("../models/burger.js");
 
-router.get("/", function(req,res){
-	res.redirect("burgers")
+// Create all our routes and set up logic within those routes where required.
+router.get("/", function(req, res) {
+  burger.all(function(data) {
+    var hbsObject = {
+      burgers: data
+    };
+    console.log(hbsObject);
+    res.render("index", hbsObject);
+  });
 });
 
-router.get("/burgers", function(req,res){
-	burgers.selectAll(function(data){
-       //handlebars object 
-        var hbsObject = {
-			burgers: data
-		};
-		console.log(hbsObject);
-		res.render("index", hbsObject);
-	});
+router.post("/", function(req, res) {
+  burger.create([
+    "burger_name", "devoured"
+  ], [
+    req.body.burger_name, req.body.devoured
+  ], function() {
+    res.redirect("/");
+  });
 });
-//post router
-router.post("/burgers/create", function(req,res){
-	burgers.insertOne([
-        "burger_name" 
-        //"devoured"
-		],[
-            req.body.burger_name
-//req.body.devoured
-//does that go here? commented out because of error
-			], function(data){
-				res.redirect("/burgers");
-			});
+
+router.put("/:id", function(req, res) {
+  var condition = "id = " + req.params.id;
+
+  console.log("condition", condition);
+
+  burger.update({
+    devoured: req.body.devoured
+  }, condition, function() {
+    res.redirect("/");
+  });
 });
-//put router after post
-router.put("/burgers/update/:id", function(req,res){
-	console.log("string")
-	var condition = "id = " + req.params.id;
-	console.log("condition", condition);
 
-	burgers.updateOne(condition, function(result){
-		console.log(result)
-		res.sendStatus(200)
-	})
-//        "devoured": req.body.devoured
-//if (result,changedRows === 0)
-//return result.status(404)
-//else { result.status(200).end(); }
-	//}, // condition, function(data){
-	//	res.redirect("/burgers")
-	});
+router.delete("/:id", function(req, res) {
+  var condition = "id = " + req.params.id;
 
-//router.deleteOne(condition, function(req, res))
-//var condition = "id" + req.params.id;
-//console.log("condition", condition):
-//burger.deleteOne(condition, function(result){
-//  if result.changed   
-//if (result,changedRows === 0)
-//return result.status(404)
-//else { result.status(200).end(); }  
-
-module.exports = router;
+  burger.delete(condition, function() {
+    res.redirect("/");
+  });
+});

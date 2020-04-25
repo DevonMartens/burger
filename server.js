@@ -3,7 +3,7 @@ var express = require("express");
 var methodOverride = require("method-override");
 var app = express();
 var bodyParser = require("body-parser");
-
+var mysql = require('mysql');
 var PORT = process.env.PORT || 3000;
 
 app.listen(PORT, function() {
@@ -23,6 +23,8 @@ app.engine("handlebars", exphbs({defaultLayout: "main"}));
 app.set("view engine", "handlebars");
 //route used
 var routes = require("./controllers/burgers_controller.js");
+
+
 
 app.use("/", routes);
 //maybe needed
