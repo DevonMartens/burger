@@ -1,65 +1,61 @@
-<div class="container">
-	<div class="jumbotron">
-		<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7vSPycP6u1_giLsq9n-5mIyLnNIyawxuo3oL2ptAZ36jRkcwsog" width="auto" height="auto">
-		<h1>Eat Burgers!!!</h1>
-	</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
 	
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
 
-	<div class="row">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="../public/assets/css/style.css" type="text/css"/>
 
-	<div class="col-md-4 col-md-offset-1">
-	 <div class="panel-panel default">
-	 	<h1>Ready to Eat Burger</h1>
-	 	<ul class="list-group">
-	 		{{#each burgers}}
-	 		 {{#unless this.devoured}}
-	 		 <li class="list-group-item">
-	 		  <div class="input-group">
-	 		  	<p class="lead">{{this.burger_name}}</p>
-	 		  	<span class="input-group-btn">
+</body>
+</html>
+<div class=container><h1 style="color:white; text-align: center">Das Burgers</h1>
 
-	 		  		<form class="devour-form">
-	 		  			<input class="burger-id" type="hidden" name="devoured" value={{this.burger_name}}>
-	 		  			<button class="btn btn-default btn-lg" type="submit">Devour it!</button>
-	 		  		</form>
-	 		  	</span>
-	 		  </div>
-	 		 </li>
-	 		 {{/unless}}
-	 		{{/each}}
-	 	</ul>
+  <div class="row">
+    <div class="col-6">
+    
 
-	 </div>
-	</div>
+<h2 style="color:white">Burgers as yet undevoured. . .</h2>
 
-	
-	<div class="row">
-		<div class="col-md-4 col-md-offset-2">
-			<h1>Devoured Burgers</h1>
-			<div class="panel panel-default">
-				<ul class="list-group">
-					{{#each burgers}}
-					 {{#if this.devoured}}
-					 <li class="list-group-item">
-					 	<p class="lead">{{this.burger_name}}</p>
-					 </li>
-					 {{/if}}
-					  {{/each}}
-				</ul>
-			</div>
-		</div>
-	</div>
+<ul>
+  {{#each burgers}}
+    {{#unless devoured}}
+      {{> burgers/burger-block devoured=true}}
+    {{/unless}}
+  {{/each}}
+</ul>
+  
+    </div>
+    <div class="col-6">
+     
+<h2 style="color:white">Burgers that have been DEVOURED.</h2>
 
-	<div class="col-md-10 col-md-offset-1">
-		<p class="lead">add burger & click submit</p>
-		
-		<form class="create-update-form" action="burgers/create" method="POST">
-		 <div class="form-group">
-		 	<textarea class="form-control input-lg" type="text" name="burger_name" row="3"></textarea>
-		 </div>
-		 <button class="btn btn-default btn-lg" type="submit">Submit</button>
-		</form>
-	</div>
+<ul>
+  {{#each burgers}}
+    {{#if devoured}}
+      {{> burgers/burger-block devoured=false}}
+    {{/if}}
+  {{/each}}
+</ul>
 
- </div>
+    </div>
+   
+  </div>
 </div>
+<h2 style="color:white">Add a Burger</h2>
+<form class="create-form">
+
+  <div class="form-group">
+    <label style="color:white" for="bn">Burger Name:</label>
+    <input type="text" id="bn" name="name">
+  </div>
+
+  <div  style="color:white" class="form-group">
+    <label  style="color:white"for="devour"> Has Das Burger Been Devoured?</label><br>
+    <input style="color:white" type="radio" name="devoured" value="1" checked> Devoured!<br>
+    <input  style="color:white" type="radio" name="devoured" value="0"> Still up for grabs. . .
+  </div>
+
+  <button  type="submit">Add burger</button>
+</form>
